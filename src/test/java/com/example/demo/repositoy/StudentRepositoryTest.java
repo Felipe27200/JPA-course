@@ -51,8 +51,8 @@ class StudentRepositoryTest {
 		
 		Student student = Student.builder()
 			.firstName("Shivam")
-			.emailId("Shivam")
-			.lastName("Shivam")
+			.emailId("shivam@gmail.com")
+			.lastName("Kumar")
 			/*
 			 * Inicializa la entidad guardian en 
 			 * la entidad Student y se la envía como
@@ -76,5 +76,50 @@ class StudentRepositoryTest {
 		
 		System.out.println("studenList: \n\t" + studentList);
  	}
+	
+	@Test
+	public void printStudentByFirstName() 
+	{
+		List<Student> students = 
+				studentRepository.findByFirstName("shivam");
+		
+		System.out.println("Student: " + students);
+	}
+
+	@Test
+	public void printStudentByFirstNameContaining() 
+	{
+		List<Student> students = 
+				studentRepository.findByFirstNameContaining("sh");
+		
+		System.out.println("Student: \n" + students);
+	}
+	
+	@Test
+	public void printStudentBylastNameNotNull() 
+	{
+		List<Student> students = 
+				studentRepository.findByLastNameNotNull();
+		
+		System.out.println("Student: \n\t" + students);
+	}
+	
+	// Find attributes of the embedded Entity
+	@Test
+	public void printGuardianName() 
+	{
+		List<Student> students = 
+				studentRepository.findByGuardianName("Nikhil");
+		
+		System.out.println("Student: \n\t" + students);
+	}
+	
+	@Test
+	public void printStudentByFirstNameAndLastName() 
+	{
+		Student students = studentRepository.findByFirstNameAndLastName("shivam", "Kumar");
+		
+		System.out.println("Student: \n\t" + students);
+	}
 	
 }
