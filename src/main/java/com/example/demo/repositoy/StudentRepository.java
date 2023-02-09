@@ -3,6 +3,8 @@ package com.example.demo.repositoy;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Student;
@@ -54,4 +56,58 @@ public interface StudentRepository extends JpaRepository <Student, Long> {
 	// Usa el operador lógico AND de SQL
 	public Student findByFirstNameAndLastName(String firstName, String lastName);
 	
+	/*  +------+
+	 *  | JPQL |
+	 *  +------+
+	 * 
+	 * Se usa para formar queries, pero estos
+	 * se basan en la estructura de la entidad y
+	 * no en la tabla en la BD. Aún así los 
+	 * datos se obtienen de ahí.
+	 * 
+	 * "emailId" -> es cómo se llama la propiedad
+	 * en la entidad, mas no en la tabla.
+	 * */
+	@Query("SELECT s FROM Student AS s WHERE s.emailId = ?1")
+	public Student getStudentByEmailAddress(String emailId);
+	
+	// Como solo se obtiene un valor se puede tomar como String
+	@Query("SELECT s.firstName FROM Student AS s WHERE s.emailId = ?1")
+	public String getStudentFirstNameByEmailAddress(String emailId);
+	
+	/*
+	 * +--------------+
+	 * | Native Query |
+	 * +--------------+
+	 * 
+	 * Se usan los queries propios de la BD y los
+	 * mismos se basan en su estructura.
+	 * */
+	@Query(
+		value = "SELECT * FROM tbl_student AS s WHERE s.email_address = ?1",
+		nativeQuery = true
+	)
+	// El parámetro se sigue basando en la "entidad"
+	public Student getStudentByEmailAddressNative(String emailId); 
+	
+	/*
+	 * +-------------------+
+	 * | Query Named Params|
+	 * +-------------------+
+	 * 
+	 * Permite enviar varios parámetros en un query.
+	 * 
+	 * Con los dos puntos después del "=" en la condición
+	 * se establece que se le enviarán varios datos y se 
+	 * hace referencia a la propiedad de la entidad de la 
+	 * que se obtendra.
+	 * */
+	@Query(
+			value = "SELECT * FROM tbl_student AS s WHERE s.email_address = :emailId",
+			nativeQuery = true
+			)
+	// El parámetro se sigue basando en la "entidad"
+	public Student getStudentByEmailAddressNativeNamedParam(
+		@Param("emailId") String emailId
+	); 
 }
