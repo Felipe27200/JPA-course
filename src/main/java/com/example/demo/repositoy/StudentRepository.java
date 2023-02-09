@@ -3,11 +3,14 @@ package com.example.demo.repositoy;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Student;
+
+import jakarta.transaction.Transactional;
 
 /*
  * Esto provee los métodos necesarios para el manejo de los datos
@@ -103,11 +106,30 @@ public interface StudentRepository extends JpaRepository <Student, Long> {
 	 * que se obtendra.
 	 * */
 	@Query(
-			value = "SELECT * FROM tbl_student AS s WHERE s.email_address = :emailId",
-			nativeQuery = true
-			)
+		value = "SELECT * FROM tbl_student AS s WHERE s.email_address = :emailId",
+		nativeQuery = true
+	)
 	// El parámetro se sigue basando en la "entidad"
 	public Student getStudentByEmailAddressNativeNamedParam(
 		@Param("emailId") String emailId
-	); 
+	);
+	
+	/*
+	 * Update Data with @Query
+	 * 
+	 * Se da la sentencia SQL para el UPDATE y se define(n) los datos a actualizar,
+	 * así como el parámetro para definir que valores se actualizaran, como se ve
+	 * los números después de ?, son la numeración de los parámetros.
+	 * 
+	 * Se necesita la anotación @Modifying para establecer que este método,
+	 * modificará los datos en la BD.
+	 * */
+	@Modifying
+	@Transactional
+	@Query(
+		value = "UPDATE tbl_student SET first_name = ?1 WHERE email_address = ?2",
+		nativeQuery = true
+	)
+	// Los párametros del método hacen referencia a las propiedad de la entidad.
+	int updateStudentNameByEmailId(String firstName, String emailId);
 }

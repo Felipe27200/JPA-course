@@ -154,6 +154,12 @@ class StudentRepositoryTest {
 		imprimirStudent(student);
 	}
 	
+	@Test
+	public void updateStudentNameByEmailIdTest() 
+	{
+		studentRepository.updateStudentNameByEmailId("Shabbir Dawoodi", "shabbir@gmail.com");
+	}
+	
 	/* --------------------------------------------------------- */
 	
 	public static void imprimirStudent(List<Student> students)
