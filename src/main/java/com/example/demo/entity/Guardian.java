@@ -35,7 +35,7 @@ import lombok.NoArgsConstructor;
 			// 	    DE LA TABLA EN LA BD >>>
 			/* Columna de la clase actual de la que se tomaran los datos*/
 			name = "name",
-			// Columna en Student de dónde se almacenarán esos datos.
+			// Columna en Student en dónde se almacenarán esos datos.
 			column = @Column(name = "guardian_name")
 	),
 	@AttributeOverride(
