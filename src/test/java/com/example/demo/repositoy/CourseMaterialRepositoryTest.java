@@ -13,7 +13,6 @@ import com.example.demo.entity.Course;
 import com.example.demo.entity.CourseMaterial;
 
 @SpringBootTest
-
 class CourseMaterialRepositoryTest 
 {
 	@Autowired

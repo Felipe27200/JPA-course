@@ -50,6 +50,19 @@ public class CourseMaterial
 	 *
 	 * Se pueden establecer más características
 	 * para la relación entre ambas tablas. 
+	 * 
+	 *  ********************************
+	 *  * UNI DIRECTIONAL RELATIONSHIP *
+	 *  ********************************
+	 * -> Si la relación se deja así y solo esta
+	 *   entidad tiene la relación, será la única
+	 *   que podrá acceder a las propiedades de la
+	 *   relación.
+	 * 
+	 *   Mientras, que la BD tendrá la relación,
+	 *   pero la otra entidad no podrá hacer uso
+	 *   de las características de la relación
+	 *   ofrecidas por JPA.	 *   
 	 * */
 	@OneToOne(
 		/*

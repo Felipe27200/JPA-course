@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,4 +31,30 @@ public class Course
 	private Long courseId;
 	private String title;
 	private Integer credits;
+	
+	/*
+	 * +----------------------------+
+	 * | BIDIRECTIONAL RELATIONSHIP |
+	 * +----------------------------+
+	 * */
+	@OneToOne(
+		/**
+		 * +----------------------------+
+		 * | SET THE RELATIONSHIP VALUE |
+		 * +----------------------------+
+		 * 
+		 * No es necesario establecer que datos son
+		 * los que se tienen que mapear para la FK,
+		 * ya que esto ya se ha hecho en la entidad
+		 * de la children table.
+		 * 
+		 * Aquí solo se apuntará al atributo de esa
+		 * entidad que hace referencia a la FK y a
+		 * la relación, en este caso, es course de
+		 * la entidad CourseMaterial.
+		 */	
+		
+		mappedBy = "course"
+	)
+	private CourseMaterial courseMaterial;
 }
