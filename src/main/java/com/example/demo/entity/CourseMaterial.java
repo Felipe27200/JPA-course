@@ -86,7 +86,28 @@ public class CourseMaterial
 		 * EAGER -> Se refiere a que siempre se traeran
 		 * los datos de ambas tablas relacionados.
 		 * */
-		fetch = FetchType.LAZY
+		fetch = FetchType.LAZY,
+		
+		/*
+		 * +-------------------------------------+
+		 * | REQUIRED RELATIONSHIP - NOT NULL FK |
+		 * +-------------------------------------+
+		 * 
+		 * optional -> si es true, se puede insertar datos 
+		 * de las tablas relacionadas de forma individual
+		 * sin necesidad de almacenar directamente los datos
+		 * de la otra tabla relacionada.
+		 * 
+		 * Si es false indica que se deben insertar los datos 
+		 * de ambas tablas para poder almacenar la relación.
+		 * 
+		 * Esto quiere decir que no se puede insertar un 
+		 * courseMaterial sino se inserta también un course.
+		 * 
+		 * En pocas palabras, hace que la relación sea obligatoria,
+		 * estableciendo el NOT NULL para la FK.
+		 * */
+		optional = false
 	)
 	
 	/*
@@ -98,8 +119,8 @@ public class CourseMaterial
 		 * */
 		name = "couse_id",
 		/*
-		 * El nombre de la columna a la que la
-		 * FK hace referencia.
+		 * El nombre de la columna del padre
+		 * a la que la FK hace referencia.
 		 * */
 		referencedColumnName = "courseId"
 	)
