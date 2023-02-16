@@ -50,19 +50,8 @@ public class Teacher {
 	 * a cascade type or others similars
 	 * */
 	@OneToMany(
-		cascade = CascadeType.ALL
+		mappedBy = "teacher"
 	)
-	@JoinColumn(
-		/*
-		 * Es el nombre que tendrá la columna
-		 * en la tabla hijo (course)
-		 * */
-		name = "teacher_id",
-		/*
-		 * Es el nombre de la columna en el
-		 * padre a la que hará referencia la FK.
-		 * */
-		referencedColumnName = "teacherId"
-	)
+
 	private List<Course> courses;
 }

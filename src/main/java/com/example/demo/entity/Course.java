@@ -1,9 +1,12 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
@@ -57,4 +60,34 @@ public class Course
 		mappedBy = "course"
 	)
 	private CourseMaterial courseMaterial;
+	
+	/*
+	 * +-------------+
+	 * | MANY TO ONE |
+	 * +-------------+
+	 * 
+	 * It's more reable the child entity
+	 * defines the FK, considering that
+	 * contain the FK.
+	 * */
+	@ManyToOne(
+		/*
+		 * The children table have to
+		 * define this feature.
+		 * */
+		cascade = CascadeType.ALL
+	)
+	@JoinColumn(
+		/*
+		 * Nombre de la FK.
+		 * */
+		name = "teacher_id",
+		/*
+		 * Es el nombre de la columna en
+		 * la tabla padrea a la que se enlazará
+		 * con la FK.
+		 * */
+		referencedColumnName = "teacherId"
+	)
+	private Teacher teacher;
 }

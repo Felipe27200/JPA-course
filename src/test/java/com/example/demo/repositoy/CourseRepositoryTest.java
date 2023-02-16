@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo.entity.Course;
+import com.example.demo.entity.Teacher;
 
 @SpringBootTest
 class CourseRepositoryTest {
@@ -38,5 +39,22 @@ class CourseRepositoryTest {
 		List<Course> courses = courseRepository.findAll();
 		
 		System.out.println("Courses: \n\t" + courses);
+	}
+	
+	@Test
+	public void saveCourseWithTeacher()
+	{
+		Teacher teacher = Teacher.builder()
+			.firstName("Priyanka")
+			.lastName("Singh")
+			.build();
+		
+		Course course = Course.builder()
+			.title("Python")
+			.credits(6)
+			.teacher(teacher)
+			.build();
+		
+		courseRepository.save(course);
 	}
 }
