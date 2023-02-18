@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -89,5 +91,11 @@ public class Course
 		 * */
 		referencedColumnName = "teacherId"
 	)
+	/*
+	 * Se excluye para que no haya una referencia
+	 * múltiple al mismo objeto en el método
+	 * toString(), generando una sobrecarga de la pila.
+	 * */
+	@ToString.Exclude
 	private Teacher teacher;
 }

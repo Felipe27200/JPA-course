@@ -27,7 +27,7 @@ import lombok.ToString;
  * datos con Fetch.LAZY, los datos de este ya
  * no se traen, todo para esta entidad.
  * */
-@ToString(exclude = "course")
+@ToString
 public class CourseMaterial 
 {
 	@Id
@@ -86,7 +86,7 @@ public class CourseMaterial
 		 * EAGER -> Se refiere a que siempre se traeran
 		 * los datos de ambas tablas relacionados.
 		 * */
-		fetch = FetchType.LAZY,
+		fetch = FetchType.EAGER, 
 		
 		/*
 		 * +-------------------------------------+
@@ -127,6 +127,11 @@ public class CourseMaterial
 	/*
 	 * Referenciado a la entidad sabe de donde
 	 * tomará la referencia para la FK.
+	 * 
+	 * Se excluye para que no haya una referencia
+	 * múltiple al mismo objeto en el método
+	 * toString(), generando una sobrecarga de la pila.
 	 * */
+	@ToString.Exclude
 	private Course course;
 }
