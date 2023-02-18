@@ -1,22 +1,21 @@
 package com.example.demo.repositoy;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import com.example.demo.entity.Course;
+import com.example.demo.entity.Student;
 import com.example.demo.entity.Teacher;
 
 @SpringBootTest
-class CourseRepositoryTest {
+class CourseRepositoryTest 
+{
 	@Autowired
 	private CourseRepository courseRepository;
 	
@@ -100,9 +99,27 @@ class CourseRepositoryTest {
 	}
 	
 	@Test
-	public void findAllSorting()
+	public void saveCourseWithStudentAndTeacher() 
 	{
-		Pageable sortByTitle = 
-			PageRequest.of(0, 2, Sort.by("title"));
+		Teacher teacher = Teacher.builder()
+			.firstName("Lizzie")
+			.lastName("Morgan")
+			.build();
+		
+		Student student = Student.builder()
+			.firstName("Abhishek")
+			.lastName("Singh")
+			.emailId("abhishek@gmail.com")
+			.build();
+		
+		Course course = Course.builder()
+			.title("AI")
+			.credits(12)
+			.teacher(teacher)
+			.build();
+		
+		course.addStudents(student);
+		
+		courseRepository.save(course);
 	}
 }

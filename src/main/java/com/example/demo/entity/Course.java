@@ -1,12 +1,16 @@
 package com.example.demo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
@@ -98,4 +102,46 @@ public class Course
 	 * */
 	@ToString.Exclude
 	private Teacher teacher;
+	
+	/*
+	 * +--------------+
+	 * | MANY TO MANY |
+	 * +--------------+
+	 * 
+	 * */
+	@ManyToMany(
+		cascade = CascadeType.ALL
+	)
+	@JoinTable(
+		/*
+		 * The name of the join table
+		 * */
+		name = "student_course_map",
+		/*
+		 * Column's names inside the join table
+		 * 
+		 * Reference to the PK of the
+		 * current Entity.
+		 * */
+		joinColumns = @JoinColumn(
+			name = "course_id",
+			referencedColumnName = "courseId"
+		),
+		/*
+		 * Reference to PK of the other Entity.
+		 * */
+		inverseJoinColumns = @JoinColumn(
+			name = "student_id",
+			referencedColumnName = "studentId"
+		)
+	)
+	private List<Student> students;
+	
+	public void addStudents(Student student)
+	{
+		if (this.students == null)
+			this.students = new ArrayList<>();
+		
+		students.add(student);
+	}
 }
